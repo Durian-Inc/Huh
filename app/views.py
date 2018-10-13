@@ -1,6 +1,9 @@
 from app import app
 from app.utils import place_search, retrieve_details
 from json import dumps
+from flask import request
+import geocoder
+
 
 @app.route('/')
 def index():
@@ -8,8 +11,19 @@ def index():
 
 
 @app.route('/api/query/', methods=['GET'])
-def map_data():
-    results = place_search(38.682660, -90.282520)
+def map_data(): 
+    latitude = request.args.get('lat')
+    longitude = request.args.get('lon')
+
+    g=geocoder.ip('me')
+    if latitude == None:
+        g.lat
+        #get curr latitude
+    if longitude == None:
+        g.lng
+        #get curr longitude
+
+    results = place_search(latitude, longitude)
     locations = []
     for result in results:
         details = retrieve_details(result['place_id'])
