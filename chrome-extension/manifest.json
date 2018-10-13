@@ -16,8 +16,7 @@
 
   "content_scripts": [{
     "js": ["main.js"],
-    "matches": ["http://*.google.com/search*",
-                "https://*.google.com/search*"]
+    "matches": ["https://*.google.com/search*"]
   }],
   "web_accessible_resources": ["pickaxe_icon.png"]
 }
