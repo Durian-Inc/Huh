@@ -20,7 +20,7 @@ class MapContainer extends Component {
       rotateControl: true
     };
     GoogleMapsLoader.VERSION = "weekly";
-    GoogleMapsLoader.KEY = "AIzaSyBJvbWiKq1qbKHdyFcv8_p-UBuA7IK9rr4";
+    GoogleMapsLoader.KEY = "AIzaSyCAgU40OXQVFZ5azzF13WtS20OM8pGFCH4";
     GoogleMapsLoader.load(function(google) {
       var map = new google.maps.Map(el, options);
       var styledMapType = new google.maps.StyledMapType(
