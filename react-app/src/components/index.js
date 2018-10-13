@@ -1,2 +1,3 @@
 import MapContainer from "./MapContainer";
-export { MapContainer };
+import CheckboxContainer from "./CheckboxContainer";
+export { MapContainer, CheckboxContainer };

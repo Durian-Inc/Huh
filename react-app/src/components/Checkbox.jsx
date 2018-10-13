@@ -1,4 +1,4 @@
-ort React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 const Checkbox = ({ type = 'checkbox', name, checked = false, onChange }) => (

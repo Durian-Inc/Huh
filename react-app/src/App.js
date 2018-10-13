@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import "./App.css";
-import { MapContainer } from "./components";
+import { MapContainer, CheckboxContainer } from "./components";
 
 const AppWrap = styled.div`
   height: 100%;
@@ -12,6 +12,7 @@ class App extends Component {
   render() {
     return (
       <AppWrap>
+        <CheckboxContainer />
         <MapContainer />
       </AppWrap>
     );
