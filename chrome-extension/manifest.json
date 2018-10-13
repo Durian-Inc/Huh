@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "cultuR",
-  "version": "0.0.2",
+  "version": "0.0.6",
   "description": "cultuR empowers immigrants by connecting them with resources in their community.",
 
   "icons": {
@@ -18,5 +18,8 @@
     "js": ["main.js"],
     "matches": ["https://*.google.com/search*"]
   }],
-  "web_accessible_resources": ["pickaxe_icon.png"]
+  "web_accessible_resources": ["pickaxe_icon.png"],
+
+  "permissions": [
+    "geolocation"]
 }
