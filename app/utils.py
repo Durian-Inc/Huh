@@ -17,12 +17,22 @@ def query_places(location=None):
 
 
 def place_search(lat, lng):
-    request_url = ( 
+    request_url = (
         "https://maps.googleapis.com/maps/api/place/nearbysearch/json?
         "location="+str(lat)+","+str(lng)+"&radius=1500&fields=name&"
         "key="+API_KEY)
     r = requests.get(request_url)
     return r.json()["results"]
+
+
+def retrieve_details(place_id):
+    request_url = (
+        "https://maps.googleapis.com/maps/api/place/details/json?"
+        "placeid="+str(place_id)+"&"
+        "fields=formatted_address,formatted_phone_number,types&"
+        "key="+API_KEY)
+    r = requests.get(request_url)
+    return r.json()["result"]
 
 
 def query_database(lat=None, lng=None, place_id=None):
