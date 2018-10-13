@@ -17,7 +17,8 @@
       "address3": "St. Louis, MO 65401",
       "phone": "(816) 111-1111",
       "type": "event",
-      "languages": ["English"]
+      "languages": ["English"],
+      "cultures": ["American", "Bulgarian"]
     },
     {
       "name": "Bulgarian Bob's Cafe",
