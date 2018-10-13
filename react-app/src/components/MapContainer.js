@@ -12,13 +12,57 @@ class MapContainer extends Component {
     let el = this.refs.map;
     let options = {
       center: { lat: -34.397, lng: 150.644 },
-      zoom: 8
+      zoom: 15
     };
-    GoogleMapsLoader.VERSION = "3.34";
-    GoogleMapsLoader.KEY = process.env.__GAPI_KEY__;
-    console.log(process.env.__GAPI_KEY__);
+    GoogleMapsLoader.VERSION = "weekly";
+    GoogleMapsLoader.KEY = "AIzaSyBJvbWiKq1qbKHdyFcv8_p-UBuA7IK9rr4";
     GoogleMapsLoader.load(function(google) {
-      new google.maps.Map(el, options);
+      var map = new google.maps.Map(el, options);
+      var infoWindow = new google.maps.InfoWindow();
+
+      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(
+          browserHasGeolocation
+            ? "Error: The Geolocation service failed."
+            : "Error: Your browser doesn't support geolocation."
+        );
+        infoWindow.open(map);
+      }
+
+      // Try HTML5 geolocation.
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+
+            map.setCenter(pos);
+          },
+          function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+          }
+        );
+      } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, map.getCenter());
+      }
+
+      /*
+      ListOfPlaces = [
+          {
+            "name": string  name of the place/event ,
+            "address1": string /* address line 1 ,
+            "address2": string /* address line 2 ,
+            "address3": string /* address line 3 ,
+            "phone": string /* phone number contact,
+            "type": string /* is this an event, business, or job hiring?
+            "languages": [string] /* List of languages with which the event/place is friendly,
+      /* any other stats we are saving and want to show 
+        }
+      ]*/
     });
   }
 
