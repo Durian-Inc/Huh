@@ -14,15 +14,11 @@ def index():
 def map_data(): 
     latitude = request.args.get('lat')
     longitude = request.args.get('lon')
-
     g=geocoder.ip('me')
-    if latitude == None:
-        g.lat
-        #get curr latitude
-    if longitude == None:
-        g.lng
-        #get curr longitude
-
+    if latitude is None:
+        latitude = g.lat
+    if longitude is None:    
+        longitude = g.lng
     results = place_search(latitude, longitude)
     locations = []
     for result in results:

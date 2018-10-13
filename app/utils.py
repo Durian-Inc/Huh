@@ -1,5 +1,6 @@
 import requests
 import sqlite3 as sql
+from flask import request
 
 
 API_KEY = "AIzaSyCAgU40OXQVFZ5azzF13WtS20OM8pGFCH4"
