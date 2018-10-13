@@ -10,10 +10,6 @@
     "128": "pickaxe_icon.png"
   },
 
-  "browser_action": {
-    "default_icon": "pickaxe_icon.png"
-  },
-
   "content_scripts": [{
     "js": ["main.js"],
     "matches": ["https://*.google.com/search*"]
@@ -30,6 +26,7 @@
 
   "browser_action": {
     "default_popup": "options.html",
-    "default_title": "cultuR"
+    "default_title": "cultuR",
+    "default_icon": "pickaxe_icon.png"
   }
 }
