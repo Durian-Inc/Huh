@@ -18,7 +18,7 @@ def query_places(location=None):
 
 def place_search(lat, lng):
     request_url = (
-        "https://maps.googleapis.com/maps/api/place/nearbysearch/json?
+        "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
         "location="+str(lat)+","+str(lng)+"&radius=1500&fields=name&"
         "key="+API_KEY)
     r = requests.get(request_url)
