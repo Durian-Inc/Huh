@@ -116,8 +116,10 @@ function formatListOfData(jsonResponse) {
   mapBois = document.getElementsByClassName("xERobd");
   if(mapBois.length > 0) {
     var mapBoi = mapBois[0];
-    mapBoi.innerHTML = "";
-    
+    mapBoi.innerHTML = "<div><iframe src=\"http://localhost:3000\"></iframe></div>";
+    for (var location in jsonResponse) {
+      mapBoi.innerHTML += "<div style=\"border-top: 1px solid #EEE;font-size: 16px;color: #222\">" + jsonResponse[location].name + "</div>";
+    }
   }
 };
 
