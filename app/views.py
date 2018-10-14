@@ -5,21 +5,22 @@ from flask import request
 import geocoder
 
 
-
 @app.route('/')
 def index():
     return "index"
 
 
 @app.route('/api/query/', methods=['GET'])
-def map_data(): 
+def map_data():
+    # ToDo: Fix the phone numbers?
     latitude = request.args.get('lat')
     longitude = request.args.get('lon')
-    g=geocoder.ip('me')
+    g = geocoder.ip('me')
     if latitude is None:
         latitude = g.lat
-    if longitude is None:    
+    if longitude is None:
         longitude = g.lng
+
     results = place_search(latitude, longitude)
     locations = []
     for result in results:
