@@ -66,6 +66,16 @@ def marker_query(place_id=None):
     return marker
 
 
+def event_query(lat, lon):
+    custom_event = None
+    command = "SELECT * FROM Events WHERE lat={} AND lon={}".format(lat, lon)
+    with sql.connect(DATABASE) as connection:
+        cur = connection.cursor()
+        cur.execute(command)
+        custom_event = cur.fetchall()
+        cur.close()
+    return marker
+
 def add_entry_to_table(new_entry, table_name):
     if table_name == 'Markers':
         new_entry['name'] = new_entry['name'].replace("'", "\\")

@@ -4,8 +4,9 @@ import geocoder
 from app import app
 from app.utils import (add_entry_to_table, find_nearby_places, marker_query,
                        retrieve_details, parse_marker, aggregate_the_markers,
-                       find_lang)
+                       find_lang, event_query)
 from hashlib import sha256
+import uuid
 
 
 @app.route('/')
@@ -55,24 +56,38 @@ def map_data():
             all_markers.append(aggregate_the_markers(result_id))
         else:
             add_entry_to_table(parse_marker(result), table_name="Markers")
-    return jsonify(all_markers)
+    return jsonify(all_markers+event_query(lat, lon))
 
 
 @app.route('/api/create/event', methods=['GET'])
 def create_new_event():
     lat = request.args.get('lat')
     lon = request.args.get('lon')
+    locations = find_nearby_places(lat, lon)
 
     event_descrip = request.args.get('event_descrip')
     event_name = request.args.get('event_name')
     event_type = request.args.get('event_type')
 
-    new_event = {
-        'e_id': sha256(str(event_name).encode('utf-8')).hexdigest(),
-        'e_name': event_name,
-        'e_descrip': event_descrip,
-        'e_type': event_type 
-    }
+    if locations != []:   
+        new_event = {
+            'e_id': sha256(str(event_name).encode('utf-8')).hexdigest(),
+            'e_name': event_name,
+            'e_descrip': event_descrip,
+            'e_type': event_type,
+            'm_id': locations[0]["place_id"],
+            'lat': lat,
+            'lon': lon
+        }
+    else:
+        new_event = {
+            'e_id': sha256(str(event_name).encode('utf-8')).hexdigest(),
+            'e_name': event_name,
+            'e_descrip': event_descrip,
+            'e_type': event_type,
+            'lat': lat,
+            'lon': lon
+        }
 
     add_entry_to_table(new_event, "Events")
     return jsonify(new_event)
@@ -96,14 +111,24 @@ def most_literate():
 def create_new_rating():
     lat = request.args.get('lat')
     lon = request.args.get('lon')
-
-    rating = {
-        'r_id': request.args.get('rating_review'),
-        'm_id': request.args.get('marker_id'),
-        'p_rating': request.args.get('p_rating'),
-        'c_rating': request.args.get('c_rating'),
-        'descrip': request.args.get('descrip')
-    }
+    locations = find_nearby_places(lat, lon)
+    uid = uuid.uuid1()
+    if locations != []:
+        rating = {
+            'r_id': str(uid),
+            'm_id': locations[-1]['place_id'],
+            'p_rating': request.args.get('plevel'),
+            'c_rating': request.args.get('clevel'),
+            'descrip': request.args.get('descrip')
+        }
+    else:
+       rating = {
+            'r_id': str(uid),
+            'm_id': "none",
+            'p_rating': request.args.get('plevel'),
+            'c_rating': request.args.get('clevel'),
+            'descrip': request.args.get('descrip')
+        } 
 
     add_entry_to_table(rating, table_name="Ratings")
     return jsonify(rating)
