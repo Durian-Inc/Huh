@@ -1,5 +1,6 @@
 import requests
 import sqlite3 as sql
+import re
 
 
 API_KEY = "AIzaSyCAgU40OXQVFZ5azzF13WtS20OM8pGFCH4"
@@ -67,7 +68,8 @@ def marker_query(place_id=None):
 
 
 def add_entry_to_table(new_entry, table_name):
-    new_entry['name'] = new_entry['name'].replace("'", "\\")
+    name = re.compile("/.'name'")
+    new_entry[name] = new_entry[name].replace("'", "\\")
     columns = ', '.join(new_entry.keys())
     place_holders = ', '.join('?'*len(new_entry))
     insert_command = "INSERT INTO {} ({}) Values ({})".format(table_name, columns, place_holders)

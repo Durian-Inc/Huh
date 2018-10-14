@@ -4,7 +4,7 @@ import geocoder
 from app import app
 from app.utils import (add_entry_to_table, find_nearby_places, marker_query,
                        retrieve_details, parse_marker, aggregate_the_markers)
-
+from hashlib import sha256
 
 @app.route('/')
 def index():
@@ -55,9 +55,22 @@ def map_data():
             add_entry_to_table(parse_marker(result), table_name="Markers")
     return jsonify(all_markers)
 
- 
 
-@app.route('/api/data/')
-def database_query(id):
-    database_entry = query_database(place_id=id)
-    return jsonify(database_entry)
+@app.route('/api/create/event', methods=['POST'])
+def create_new_event():
+    lat = request.args.get('lat')
+    lon = request.args.get('lon')
+    marker_id = request.args.get('request_id')
+    event_name = request.args.get('event_name')
+    event_type = request.args.get('event_type')
+
+    new_event = {
+        'e_id': sha256(event_name.encode('utf-8')).hexdigest(),
+        'e_name': event_name,
+        'm_id': marker_id,
+        'e_type': event_type 
+    }
+
+    add_entry_to_table(new_event, "Events")
+    return jsonify(new_event)
+
