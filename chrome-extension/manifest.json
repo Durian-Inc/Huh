@@ -1,0 +1,32 @@
+{
+  "manifest_version": 2,
+  "name": "cultuR",
+  "version": "0.0.12",
+  "description": "cultuR empowers immigrants by connecting them with resources in their community.",
+
+  "icons": {
+    "16": "pickaxe_icon.png",
+    "48": "pickaxe_icon.png",
+    "128": "pickaxe_icon.png"
+  },
+
+  "content_scripts": [{
+    "js": ["main.js"],
+    "matches": ["https://*.google.com/search*"]
+  }],
+  "web_accessible_resources": ["pickaxe_icon.png"],
+
+  "permissions": ["geolocation", "storage"],
+  
+
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+
+  "browser_action": {
+    "default_popup": "options.html",
+    "default_title": "cultuR",
+    "default_icon": "pickaxe_icon.png"
+  }
+}

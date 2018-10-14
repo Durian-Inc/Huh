@@ -1,0 +1,64 @@
+{
+  "list": [
+    {
+      "name": "Immigrant Cafe",
+      "address1": "901 Collegiate Blvd.",
+      "address2": "Apt 2021",
+      "address3": "St. Louis, MO 65409",
+      "phone": "(816) 111-1112",
+      "type": "business",
+      "languages": ["Spanish"],
+      "cultures": ["Spanish", "Mexican"]
+    },
+    {
+      "name": "Bulgarian Bob's Cafe",
+      "address1": "900 Collegiate Blvd.",
+      "address2": "Apt 2022",
+      "address3": "St. Louis, MO 65401",
+      "phone": "(816) 111-1111",
+      "type": "event",
+      "languages": ["English"],
+      "cultures": ["American", "Bulgarian"]
+    },
+    {
+      "name": "Bulgarian Bob's Cafe",
+      "address1": "900 Collegiate Blvd.",
+      "address2": "Apt 2022",
+      "address3": "St. Louis, MO 65401",
+      "phone": "(816) 111-1111",
+      "type": "event",
+      "languages": ["English"],
+      "cultures": ["American", "Bulgarian"]
+    },
+    {
+      "name": "Bulgarian Bob's Cafe",
+      "address1": "900 Collegiate Blvd.",
+      "address2": "Apt 2022",
+      "address3": "St. Louis, MO 65401",
+      "phone": "(816) 111-1111",
+      "type": "event",
+      "languages": ["English"],
+      "cultures": ["American", "Bulgarian"]
+    },
+    {
+      "name": "Bulgarian Bob's Cafe",
+      "address1": "900 Collegiate Blvd.",
+      "address2": "Apt 2022",
+      "address3": "St. Louis, MO 65401",
+      "phone": "(816) 111-1111",
+      "type": "event",
+      "languages": ["English"],
+      "cultures": ["American", "Bulgarian"]
+    },
+    {
+      "name": "Bulgarian Bob's Cafe",
+      "address1": "900 Collegiate Blvd.",
+      "address2": "Apt 2022",
+      "address3": "St. Louis, MO 65401",
+      "phone": "(816) 111-1111",
+      "type": "event",
+      "languages": ["English"],
+      "cultures": ["American", "Bulgarian"]
+    }
+  ]
+}
