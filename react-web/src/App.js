@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import "./App.css";
-import { MapContainer, CheckboxContainer, FilterBox, SearchbarContainer } from "./components";
+import {
+  MapContainer,
+  CheckboxContainer,
+  SearchbarContainer,
+  FilterBox
+} from "./components";
 
 const AppWrap = styled.div`
   height: 100%;
@@ -12,9 +17,9 @@ class App extends Component {
   render() {
     return (
       <AppWrap>
-        <FilterBox> 
-	  <CheckboxContainer />
-	</FilterBox>
+        <FilterBox>
+          <CheckboxContainer />
+        </FilterBox>
         <SearchbarContainer />
         <MapContainer />
       </AppWrap>
