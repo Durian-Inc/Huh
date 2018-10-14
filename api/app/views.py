@@ -3,7 +3,8 @@ from flask import jsonify, request
 import geocoder
 from app import app
 from app.utils import (add_entry_to_table, find_nearby_places, marker_query,
-                       retrieve_details, parse_marker, aggregate_the_markers)
+                       retrieve_details, parse_marker, aggregate_the_markers,
+                       find_lang)
 
 
 @app.route('/')
@@ -55,9 +56,16 @@ def map_data():
             add_entry_to_table(parse_marker(result), table_name="Markers")
     return jsonify(all_markers)
 
- 
-
-@app.route('/api/data/')
-def database_query(id):
-    database_entry = query_database(place_id=id)
-    return jsonify(database_entry)
+@app.route('/api/literacy', methods=['GET'])
+def most_literate():
+    lat = request.args.get('lat')
+    lon = request.args.get('lon')
+    lang = request.args.get('lang')
+    g = geocoder.ip('me')
+    if lat is None:
+        lat = g.lat
+    if lon is None:
+        lon = g.lng
+    results = find_nearby_places(lat, lon)
+    final = find_lang(results,lang)
+    return jsonify(final)

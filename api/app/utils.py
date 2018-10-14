@@ -78,5 +78,29 @@ def add_entry_to_table(new_entry, table_name):
         cur.close()
 
 def aggregate_the_markers(result_id):
-    # ToDo: Functionality to actually aggregate the data
-    pass
+    select_command = ('''SELECT e_id, e_name, Markers.m_id, e_type, lang, Ratings.r_id, l_rating, m_address, m_phone, m_name, lat, lng, p_rating, c_rating"
+        FROM 'Events','Literacy','Markers','Ratings'
+        WHERE Markers.m_id = {} AND Markers.m_id = Ratings.m_id AND Ratings.r_id = Literacy.r_id AND Markers.m_id = Events.m_id;''').format(result_id)
+    with sql.connect(DATABASE) as connection:
+        cur = connection.cursor()
+        cur.execute(select_command)
+        aggregate = cur.fetchall()
+        cur.close()
+    return aggregate
+
+def find_lang(results,lang):
+    final = []
+    for result in results:
+        select_command =( '''
+        SELECT count(lang )
+        FROM Literacy, Ratings, Makers
+        WHERE lang = {} AND Makers.m_id = {} AND Literacy.r_id = Ratings.r_id AND Ratings.m_id = Makers.m_id
+        ''').format(lang,result['place_id'])
+        with sql.connect(DATABASE) as connection:
+            cur = connection.cursor()
+            cur.execute(select_command)
+            count = cur.fetchall()
+            cur.close()
+        if count > 0:
+            final.append(result[''])
+    return final
