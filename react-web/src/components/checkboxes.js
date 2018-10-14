@@ -1,16 +1,16 @@
 const checkboxes = [
   {
-    name: 'events-checkbox',
+    name: 'Events',
     key: 'events',
     label: 'Events',
   },
   {
-    name: 'business-checkbox',
+    name: 'Businesses',
     key: 'business',
     label: 'Business',
   },
   {
-    name: 'hiring-checkbox',
+	  name: 'Hiring',
     key: 'hiring',
     label: 'Hiring',
   },
