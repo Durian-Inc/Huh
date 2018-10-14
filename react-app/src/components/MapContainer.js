@@ -1,12 +1,7 @@
 import React, { Component } from "react";
 import GoogleMapsLoader from "google-maps";
-//import styled from "styled-components";
+import axios from "axios";
 
-/*const Map = styled.div`
-  height: 100%;
-  width: 100%;
-`;
-*/
 class MapContainer extends Component {
   componentDidMount() {
     let el = this.refs.map;
@@ -308,18 +303,22 @@ class MapContainer extends Component {
         }
       ]*/
 
-      for (var i = 0; i < 3; ++i) {
-        var marker = new google.maps.Marker({
-          position: {
-            lat: 38.50281 + 0.001 * i,
-            lng: -90.62798 + 0.001
-          },
-          map: map
+      axios.get("http://localhost:5000/api/query").then(response => {
+        let locations = response.data;
+        locations.forEach(loc => {
+          var marker = new google.maps.Marker({
+            position: {
+              lat: loc.lat,
+              lng: loc.lng
+            },
+            map: map
+          });
+          marker.addListener("click", function() {
+            console.log("Hiya");
+            this.props.pane();
+          });
         });
-        marker.addListener("click", function() {
-          console.log("Hiya");
-        });
-      }
+      });
     });
   }
 
