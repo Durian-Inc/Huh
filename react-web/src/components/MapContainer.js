@@ -6,7 +6,7 @@ class MapContainer extends Component {
   componentDidMount() {
     let el = this.refs.map;
     let options = {
-      center: { lat: -34.397, lng: 150.644 },
+      center: { lat: 38.627, lng: -90.1994 },
       zoom: 15,
       disableDefaultUI: true,
       zoomControl: true,
@@ -278,7 +278,7 @@ class MapContainer extends Component {
               lng: position.coords.longitude
             };
 
-            map.setCenter(pos);
+            map.panTo(pos);
           },
           function() {
             handleLocationError(true, infoWindow, map.getCenter());
