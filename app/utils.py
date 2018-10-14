@@ -1,5 +1,6 @@
 import requests
 import sqlite3 as sql
+from random import choice
 
 
 API_KEY = "AIzaSyCAgU40OXQVFZ5azzF13WtS20OM8pGFCH4"
@@ -38,7 +39,7 @@ def retrieve_details(place_id):
 def query_database(lat=None, lng=None, place_id=None):
     markers = []
     if (lat and lng):
-        command = "SELECT * FROM Markers WHERE lat = '{}' AND lng = '{}'".format(lat, lng)
+        command = "SELECT * FROM Markers WHERE lat = {} AND lng = {}".format(lat, lng)
     else:
         command = "SELECT * FROM Markers WHERE id = '{}'".format(place_id)
     with sql.connect(DATABASE) as connection:
@@ -47,3 +48,18 @@ def query_database(lat=None, lng=None, place_id=None):
         markers = cur.fetchall()
         cur.close()
     return markers[0:10]
+
+
+def add_marker_to_database(marker, marker_type=None):
+    chars = ['E', 'L', 'M']
+    if (marker_type is None):
+        marker_type = choice(chars)
+    marker['name'] = marker['name'].replace("'", "\\")
+    insert_command = "INSERT INTO Markers (formatted_address, formatted_phone, id, m_name, lat, lng, m_type) Values('{}', '{}', '{}', '{}', {}, {}, '{}')".format(
+            marker['address'], marker['phone'], marker['place_id'], marker['name'],
+            marker['lat'], marker['lng'], marker_type)
+    with sql.connect(DATABASE) as connection:
+        cur = connection.cursor()
+        cur.execute(insert_command)
+        connection.commit()
+        cur.close()
