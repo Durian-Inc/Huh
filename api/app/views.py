@@ -3,8 +3,10 @@ from flask import jsonify, request
 import geocoder
 from app import app
 from app.utils import (add_entry_to_table, find_nearby_places, marker_query,
-                       retrieve_details, parse_marker, aggregate_the_markers)
+                       retrieve_details, parse_marker, aggregate_the_markers,
+                       find_lang)
 from hashlib import sha256
+
 
 @app.route('/')
 def index():
@@ -75,3 +77,16 @@ def create_new_event():
     add_entry_to_table(new_event, "Events")
     return jsonify(new_event)
 
+@app.route('/api/create/literacy', methods=['GET'])
+def most_literate():
+    lat = request.args.get('lat')
+    lon = request.args.get('lon')
+    lang = request.args.get('lang')
+    g = geocoder.ip('me')
+    if lat is None:
+        lat = g.lat
+    if lon is None:
+        lon = g.lng
+    results = find_nearby_places(lat, lon)
+    final = find_lang(results,lang)
+    return jsonify(final)
