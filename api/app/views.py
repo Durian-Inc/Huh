@@ -1,7 +1,11 @@
-from app import app
-from app.utils import place_search, retrieve_details, query_database, add_marker_to_database
-from flask import request, jsonify
+from json import dumps
+
+from flask import jsonify, request
+
 import geocoder
+from app import app
+from app.utils import (add_marker_to_database, place_search, query_database,
+                       retrieve_details)
 
 
 @app.route('/')
