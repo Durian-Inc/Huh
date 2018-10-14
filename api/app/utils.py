@@ -1,10 +1,9 @@
 import requests
 import sqlite3 as sql
-from random import choice
 
 
 API_KEY = "AIzaSyCAgU40OXQVFZ5azzF13WtS20OM8pGFCH4"
-DATABASE = "app/database/markers.db"
+DATABASE = "api/app/database/database.db"
 
 
 def query_places(location=None):
@@ -17,11 +16,18 @@ def query_places(location=None):
     return r.text
 
 
-def place_search(lat, lng):
-    request_url = (
-        "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
-        "location="+str(lat)+","+str(lng)+"&radius=1500&fields=name&"
-        "key="+API_KEY)
+def find_nearby_places(lat, lng, query=None):
+    if query is None:
+        request_url = (
+            "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
+            + "location="+str(lat)+","+str(lng)+"&radius=1500&fields=name&"
+            + "key="+API_KEY)
+    else:
+        query = query.replace(' ', '%20')
+        request_url = (
+            "https://maps.googleapis.com/maps/api/place/textsearch/json?"
+            "query="+query+"&location="+str(lat)+","+str(lng)+"&radius=1500&fields=name"
+            + "&key="+API_KEY)
     r = requests.get(request_url)
     return r.json()["results"]
 
@@ -30,36 +36,47 @@ def retrieve_details(place_id):
     request_url = (
         "https://maps.googleapis.com/maps/api/place/details/json?"
         "placeid="+str(place_id)+"&"
-        "fields=formatted_address,formatted_phone_number,types&"
-        "key="+API_KEY)
+        + "fields=formatted_address,formatted_phone_number,types&"
+        + "key="+API_KEY)
     r = requests.get(request_url)
     return r.json()["result"]
 
 
-def query_database(lat=None, lng=None, place_id=None):
-    markers = []
-    if (lat and lng):
-        command = "SELECT * FROM Markers WHERE lat = {} AND lng = {}".format(lat, lng)
-    else:
-        command = "SELECT * FROM Markers WHERE id = '{}'".format(place_id)
+def parse_marker(result):
+    details = retrieve_details(result['place_id'])
+    if not hasattr(details, "formatted_phone_number"):
+        details['formatted_phone_number'] = "N/A"
+    return ({
+        'm_id': result['place_id'],
+        'm_address': details["formatted_address"],
+        'm_phone': details['formatted_phone_number'],
+        'm_name': result['name'],
+        'lat': result['geometry']['location']['lat'],
+        'lng': result['geometry']['location']['lng'],
+    })
+
+def marker_query(place_id=None):
+    marker = None
+    command = "SELECT * FROM Markers WHERE m_id = '{}'".format(place_id)
     with sql.connect(DATABASE) as connection:
         cur = connection.cursor()
         cur.execute(command)
-        markers = cur.fetchall()
+        marker = cur.fetchall()
         cur.close()
-    return markers[0:10]
+    return marker
 
 
-def add_marker_to_database(marker, marker_type=None):
-    chars = ['E', 'L', 'M']
-    if (marker_type is None):
-        marker_type = choice(chars)
-    marker['name'] = marker['name'].replace("'", "\\")
-    insert_command = "INSERT INTO Markers (formatted_address, formatted_phone, id, m_name, lat, lng, m_type) Values('{}', '{}', '{}', '{}', {}, {}, '{}')".format(
-            marker['address'], marker['phone'], marker['place_id'], marker['name'],
-            marker['lat'], marker['lng'], marker_type)
+def add_entry_to_table(new_entry, table_name):
+    new_entry['name'] = new_entry['name'].replace("'", "\\")
+    columns = ', '.join(new_entry.keys())
+    place_holders = ', '.join('?'*len(new_entry))
+    insert_command = "INSERT INTO {} ({}) Values ({})".format(table_name, columns, place_holders)
     with sql.connect(DATABASE) as connection:
         cur = connection.cursor()
-        cur.execute(insert_command)
+        cur.execute(insert_command, list(new_entry.values()))
         connection.commit()
         cur.close()
+
+def aggregate_the_markers(result_id):
+    # ToDo: Functionality to actually aggregate the data
+    pass
