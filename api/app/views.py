@@ -60,14 +60,15 @@ def map_data():
 def create_new_event():
     lat = request.args.get('lat')
     lon = request.args.get('lon')
-    marker_id = request.args.get('request_id')
+
+    event_descrip = request.args.get('event_descrip')
     event_name = request.args.get('event_name')
     event_type = request.args.get('event_type')
 
     new_event = {
         'e_id': sha256(event_name.encode('utf-8')).hexdigest(),
         'e_name': event_name,
-        'm_id': marker_id,
+        'e_descrip': event_descrip,
         'e_type': event_type 
     }
 

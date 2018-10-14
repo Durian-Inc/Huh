@@ -38,6 +38,7 @@ CREATE TABLE Events(
     e_name varchar(120) DEFAULT 'Event',
     m_id varchar(255) NOT NULL,
     e_type CHAR CHECK(e_type = 'E' OR e_type = 'J'),
+    e_descrip varchar(255),
     FOREIGN KEY(m_id) REFERENCES Markers
 );
 
@@ -57,6 +58,6 @@ INSERT INTO Literacy (lang, r_id, l_rating) VALUES("fr","00002",3);
 INSERT INTO Literacy (lang, r_id, l_rating) VALUES("de","00003",4);
 
 
-INSERT INTO Events (e_id,m_id,e_name,e_type) VALUES("00001","asdfghjkl1","Summer Sno Cone Blast","E");
-INSERT INTO Events (e_id,m_id,e_name,e_type) VALUES("00002","asdfghjkl2","Global Sweets Hiring","J");
-INSERT INTO Events (e_id,m_id,e_name,e_type) VALUES("00003","asdfghjkl3","Futbol Team Meet", "E");
+INSERT INTO Events (e_id,m_id,e_name, e_descrip, e_type) VALUES("00001","asdfghjkl1","Summer Sno Cone Blast", "This is going to be a great event!","E");
+INSERT INTO Events (e_id,m_id,e_name, e_descrip, e_type) VALUES("00002","asdfghjkl2","Global Sweets Hiring", "Looking for all people to work!","J");
+INSERT INTO Events (e_id,m_id,e_name, e_descrip, e_type) VALUES("00003","asdfghjkl3","Futbol Team Meet", "Let us meet!", "E");
