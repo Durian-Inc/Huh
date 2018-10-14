@@ -117,7 +117,7 @@ function formatListOfData(jsonResponse) {
   mapBois = document.getElementsByClassName("xERobd");
   if(mapBois.length > 0) {
     var mapBoi = mapBois[0];
-    mapBoi.innerHTML = "<div><iframe src=\"http://localhost:3000\"></iframe></div>";
+    mapBoi.innerHTML = "<div width=\"1000px\" height=\"499px\"><iframe src=\"http://localhost:3000\" width=\"1000px\" height=\"499px\"></iframe></div>";
     for (var location in jsonResponse) {
       var loc = jsonResponse[location];
       var langs = "";
