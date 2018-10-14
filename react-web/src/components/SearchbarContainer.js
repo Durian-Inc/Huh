@@ -1,19 +1,19 @@
 import React, { Component } from "react";
-import Autocomplete from 'react-autocomplete'
+import Autocomplete from "react-autocomplete";
 import GoogleMapsLoader from "google-maps";
-//import styled from "styled-components";
-
 
 /* Make a request to the Google Place API with our query */
 function requestPlaceApi(query) {
-
-  var url = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?'
-      + 'input=' + escape(query) + '&key=AIzaSyCAgU40OXQVFZ5azzF13WtS20OM8pGFCH4';
+  var url =
+    "https://maps.googleapis.com/maps/api/place/autocomplete/json?" +
+    "input=" +
+    escape(query) +
+    "&key=AIzaSyCAgU40OXQVFZ5azzF13WtS20OM8pGFCH4";
   console.log(13, url);
 
-  return fetch(url, {mode: 'cors'}).then((response) => {
+  return fetch(url, { mode: "cors" }).then(response => {
     console.log(15, response.json());
-    return response.json()['predictions'];
+    return response.json()["predictions"];
   });
 }
 
@@ -34,16 +34,12 @@ function geolocate(google, autocomplete) {
 }
 
 class SearchbarContainer extends Component {
-
   state = {
-    value: '',
+    value: "",
     suggestedValues: []
-  }
+  };
 
   currentPromise = null;
-
-
-
 
   componentDidMount() {
     let options = {
@@ -53,53 +49,59 @@ class SearchbarContainer extends Component {
 
     GoogleMapsLoader.VERSION = "weekly";
     GoogleMapsLoader.KEY = "AIzaSyCAgU40OXQVFZ5azzF13WtS20OM8pGFCH4";
-    GoogleMapsLoader.LIBRARIES = ['geometry', 'places'];
+    GoogleMapsLoader.LIBRARIES = ["geometry", "places"];
     GoogleMapsLoader.load(function(google) {
-      var autocomplete = new google.maps.places.Autocomplete(document.getElementById('search-autocomplete', options)
+      var autocomplete = new google.maps.places.Autocomplete(
+        document.getElementById("search-autocomplete", options)
+      );
       geolocate(google, autocomplete);
       console.log(61, autocomplete);
 
       //
-
     });
   }
 
-
-
-
-
-
-
-
-
-
-
-
   render() {
-
     console.log(33, this);
     console.log(34, this.currentPromise);
     return (
-      <form ref="searchForm">
-        <label htmlFor="search-autocomplete">Search</label>
+      <form
+        ref="searchForm"
+        style={{
+          width: "100%",
+          height: "100%",
+          display: "block"
+        }}
+      >
         <Autocomplete
-          inputProps={{ id: 'search-autocomplete' }}
-          wrapperStyle={{ position: 'absolute',
-                          display: 'inline-block',
-                          zIndex: 5
+          inputProps={{
+            style: {
+              width: "100%",
+              height: "100%",
+              borderRadius: "40px",
+              outline: "none",
+              border: "none",
+              padding: "0 15px",
+              fontSize: "18px"
+            },
+            placeholder: "Search here",
+            id: "search-autocomplete"
+          }}
+          wrapperStyle={{
+            width: "100%",
+            height: "100%",
+            display: "block"
           }}
           value={this.state.value}
           items={this.state.suggestedValues}
-          getItemValue={(item) => item.description}
-          
+          getItemValue={item => item.description}
           // update the value and the suggested values
           onSelect={(value, item) => {
-            this.setState({ value, suggestedValues: [ item ] });
+            this.setState({ value, suggestedValues: [item] });
           }}
-          
           // update the state and forget about previous changes
           onChange={(event, value) => {
-            this.setState({ value })
+            this.setState({ value });
             console.log(52, this);
             console.log(53, this.currentPromise);
             this.currentPromise = null;
@@ -107,28 +109,26 @@ class SearchbarContainer extends Component {
             console.log(56, value);
             // display the new list of items
             if (value.length >= 3) {
-              this.currentPromise = requestPlaceApi(value)
-                .then((itemsList) => {
-                  this.setState({ suggestedValues: itemsList })
-                });
-            }
-            else {
+              this.currentPromise = requestPlaceApi(value).then(itemsList => {
+                this.setState({ suggestedValues: itemsList });
+              });
+            } else {
               this.currentPromise = null;
-              this.setState({ suggestedValues: []})
+              this.setState({ suggestedValues: [] });
             }
           }}
-          renderMenu={children => (
-            <div className="menu">
-              {children}
-            </div>
-          )}
+          renderMenu={children => <div className="menu">{children}</div>}
           renderItem={(item, isHighlighted) => (
-            <div className={`item ${isHighlighted ? 'item-highlighted' : ''}`}
-              key={item.abbr}>{item.name}</div>
+            <div
+              className={`item ${isHighlighted ? "item-highlighted" : ""}`}
+              key={item.abbr}
+            >
+              {item.name}
+            </div>
           )}
         />
       </form>
-    )
+    );
   }
 }
 

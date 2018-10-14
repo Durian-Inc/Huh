@@ -6,7 +6,8 @@ import {
   CheckboxContainer,
   SearchbarContainer,
   FilterBox,
-  Info
+  Info,
+  Search
 } from "./components";
 
 const AppWrap = styled.div`
@@ -21,7 +22,7 @@ class App extends Component {
         <FilterBox>
           <CheckboxContainer />
         </FilterBox>
-        <SearchbarContainer />
+        <Search />
         <Info />
         <MapContainer />
       </AppWrap>
