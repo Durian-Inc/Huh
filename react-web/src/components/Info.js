@@ -7,9 +7,9 @@ const InfoWrapper = styled.div({
   position: "absolute",
   background: "white",
   borderRadius: "20px",
-  boxShadow: "1px 1px 1px 1px #ccc",
+  boxShadow: "0 4px 20px rgba(255, 7, 245, 0.5)",
   height: "300px",
-  width: "200px",
+  width: "250px",
   padding: "15px",
   zIndex: 5
 });
@@ -18,12 +18,29 @@ class Info extends Component {
   render() {
     return (
       <InfoWrapper>
-        <h3 id="name">bees</h3>
-        <h4 id="type">bees</h4>
-        <p id="prating">0.0/5.0</p>
-        <p id="lrating">0.0/5.0</p>
-        <p id="location">bees</p>
-        <p id="desc">lots of bees</p>
+        <h3>
+          <span id="name">Select a marker!</span>
+        </h3>
+        <h4>
+          Type of business:&nbsp;
+          <span id="type" />
+        </h4>
+        <p>
+          Privacy level:&nbsp;
+          <span id="prating">0.0/5.0</span>
+        </p>
+        <p>
+          Language acceptance:&nbsp;
+          <span id="lrating">0.0/5.0</span>
+        </p>
+        <p>
+          Address:&nbsp;
+          <span id="location" />
+        </p>
+        <p>
+          Description:&nbsp;
+          <span id="desc" />
+        </p>
       </InfoWrapper>
     );
   }

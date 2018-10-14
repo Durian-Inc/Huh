@@ -36,10 +36,17 @@
 
       d_name.innerHTML = name
       d_type.innerHTML = type
-      d_prating.innerHTML = prating
-      d_lrating.innerHTML = lrating
+      if(prating)
+        d_prating.innerHTML = prating + "/5.0"
+      else
+        d_prating.innerHTML = "?"
+      if(lrating)
+        d_lrating.innerHTML = lrating + "/5.0"
+      else
+        d_lrating.innerHTML = "?"
       d_address.innerHTML = address
-      d_desc.innerHTML = desc
+      if(desc)
+        d_desc.innerHTML = desc
     }
     </script> <!--
       This HTML file is a template.

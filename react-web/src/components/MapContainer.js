@@ -318,8 +318,8 @@ class MapContainer extends Component {
             window.updateInfo(
               loc.name,
               loc.type,
-              1.1,
-              1.2,
+              null,
+              null,
               loc.address,
               loc.desc
             );
