@@ -71,7 +71,7 @@ function getProfileForUser() {
       return {
         lat: coordinates.latitude,
         lon: coordinates.longitude,
-        query: "" //TODO
+        query: "" //decodeURIComponent(document.URL.substring(document.URL.indexOf("=") + 1, document.URL.indexOf("&"))) //TODO
       };
     });
 }
