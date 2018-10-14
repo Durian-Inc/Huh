@@ -4,13 +4,14 @@ import Autocomplete from 'react-autocomplete'
 //import styled from "styled-components";
 
 
-
 /* Make a request to the Google Place API with our query */
 function requestPlaceApi(query) {
+
   var url = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?'
       + 'input=' + escape(query) + '&key=AIzaSyCAgU40OXQVFZ5azzF13WtS20OM8pGFCH4';
   console.log(13, url);
-  return fetch(url).then((response) => {
+
+  return fetch(url, {mode: 'cors'}).then((response) => {
     console.log(15, response.json());
     return response.json()['predictions'];
   });
@@ -49,10 +50,11 @@ class SearchbarContainer extends Component {
           // update the state and forget about previous changes
           onChange={(event, value) => {
             this.setState({ value })
-            console.log(this);
-            console.log(this.currentPromise);
+            console.log(52, this);
+            console.log(53, this.currentPromise);
             this.currentPromise = null;
 
+            console.log(56, value);
             // display the new list of items
             if (value.length >= 3) {
               this.currentPromise = requestPlaceApi(value)
