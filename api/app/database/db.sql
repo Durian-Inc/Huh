@@ -16,6 +16,7 @@ CREATE TABLE Ratings(
     p_rating int CHECK(p_rating > -1 AND p_rating < 6),
     /* --- COMMUNICATION THROUGH BARRIERS RATING --- */
     c_rating int CHECK(c_rating > -1 AND c_rating < 6),
+    descrip varchar(255),
     FOREIGN KEY(m_id) REFERENCES Markers,
     PRIMARY KEY(r_id)
 );
@@ -49,9 +50,9 @@ INSERT INTO Markers (m_address, m_phone, m_id, m_name, lat, lng) VALUES ("222 Su
 INSERT INTO Markers (m_address, m_phone, m_id, m_name, lat, lng) VALUES ("123 Sweets Dr.","(555)-987-6543","asdfghjkl3","Global Sweets",38.579,-79.882);
 INSERT INTO Markers (m_address, m_phone, m_id, m_name, lat, lng) VALUES ("9090 Green Way","(555)-8899-1122","asdfghjkl4","Recreation Center",40,-79.02);
 
-INSERT INTO Ratings (r_id, m_id, p_rating, c_rating) VALUES ("00001", "asdfghjkl1", 5, 3);
-INSERT INTO Ratings (r_id, m_id, p_rating, c_rating) VALUES ("00002", "asdfghjkl1", 4, 2);
-INSERT INTO Ratings (r_id, m_id, p_rating, c_rating) VALUES ("00003", "asdafgjkl2", 2, 5);
+INSERT INTO Ratings (r_id, m_id, p_rating, c_rating, descrip) VALUES ("00001", "asdfghjkl1", 5, 3, "This is the first");
+INSERT INTO Ratings (r_id, m_id, p_rating, c_rating, descrip) VALUES ("00002", "asdfghjkl1", 4, 2, "This is the second");
+INSERT INTO Ratings (r_id, m_id, p_rating, c_rating, descrip) VALUES ("00003", "asdafgjkl2", 2, 5, "This is the third");
 
 INSERT INTO Literacy (lang, r_id, l_rating) VALUES("es","00001",5);
 INSERT INTO Literacy (lang, r_id, l_rating) VALUES("fr","00002",3);

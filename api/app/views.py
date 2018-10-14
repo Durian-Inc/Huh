@@ -90,3 +90,20 @@ def most_literate():
     results = find_nearby_places(lat, lon)
     final = find_lang(results,lang)
     return jsonify(final)
+
+
+@app.route('/api/create/rating', methods=['GET'])
+def create_new_rating():
+    lat = request.args.get('lat')
+    lon = request.args.get('lon')
+
+    rating = {
+        'r_id': request.args.get('rating_review'),
+        'm_id': request.args.get('marker_id'),
+        'p_rating': request.args.get('p_rating'),
+        'c_rating': request.args.get('c_rating'),
+        'descrip': request.args.get('descrip')
+    }
+
+    add_entry_to_table(rating, table_name="Ratings")
+    return jsonify(rating)

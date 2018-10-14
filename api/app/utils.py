@@ -67,9 +67,9 @@ def marker_query(place_id=None):
 
 
 def add_entry_to_table(new_entry, table_name):
-    try:
+    if table_name == 'Markers':
         new_entry['name'] = new_entry['name'].replace("'", "\\")
-    except KeyError:
+    elif table_name == 'Events':
         new_entry['e_name'] = new_entry['e_name'].replace("'", "\\")        
     columns = ', '.join(new_entry.keys())
     place_holders = ', '.join('?'*len(new_entry))
