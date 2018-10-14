@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Controls from "./CheckboxContainer";
 const FilterBox = styled.div({
   top: "30px",
   right: "30px",

@@ -15,33 +15,39 @@ const InfoWrapper = styled.div({
 });
 
 class Info extends Component {
+  openModal = () => {
+    window.openModal();
+  };
   render() {
     return (
-      <InfoWrapper>
-        <h3>
-          <span id="name">Select a marker!</span>
-        </h3>
-        <h4>
-          Type of business:&nbsp;
-          <span id="type" />
-        </h4>
-        <p>
-          Privacy level:&nbsp;
-          <span id="prating">0.0/5.0</span>
-        </p>
-        <p>
-          Language acceptance:&nbsp;
-          <span id="lrating">0.0/5.0</span>
-        </p>
-        <p>
-          Address:&nbsp;
-          <span id="location" />
-        </p>
-        <p>
-          Description:&nbsp;
-          <span id="desc" />
-        </p>
-      </InfoWrapper>
+      <div>
+        <InfoWrapper>
+          <h3>
+            <span id="name">Select a marker!</span>
+          </h3>
+          <h4>
+            Type of business:&nbsp;
+            <span id="type" />
+          </h4>
+          <p>
+            Privacy level:&nbsp;
+            <span id="prating">0.0/5.0</span>
+          </p>
+          <p>
+            Language acceptance:&nbsp;
+            <span id="lrating">0.0/5.0</span>
+          </p>
+          <p>
+            Address:&nbsp;
+            <span id="location" />
+          </p>
+          <p>
+            Description:&nbsp;
+            <span id="desc" />
+          </p>
+          <button onClick={this.openModal}>Add or Edit</button>
+        </InfoWrapper>
+      </div>
     );
   }
 }
