@@ -4,14 +4,14 @@ import "./CheckboxContainer.css";
 class CheckBox extends React.Component {
   render() {
     return (
-      <label class="container">
+      <label className="container">
         <input
           type="checkbox"
           id={this.props.id}
           value={this.props.value}
           onChange={this.props.onChange}
         />
-        <span class="checkmark" />
+        <span className="checkmark" />
       </label>
     );
   }
