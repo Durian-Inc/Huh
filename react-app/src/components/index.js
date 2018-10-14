@@ -1,3 +1,4 @@
 import MapContainer from "./MapContainer";
 import CheckboxContainer from "./CheckboxContainer";
-export { MapContainer, CheckboxContainer };
+import FilterBox from "./FilterBox";
+export { MapContainer, CheckboxContainer, FilterBox };

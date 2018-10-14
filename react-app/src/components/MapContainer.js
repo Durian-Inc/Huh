@@ -67,7 +67,7 @@ class MapContainer extends Component {
   }
 
   render() {
-    return <div ref="map" style={{ height: "100%", width: "100%" }} />;
+    return <div ref="map" style={{ height: "100%", width: "100%", position: "relative", zIndex: 0 }} />;
   }
 }
 

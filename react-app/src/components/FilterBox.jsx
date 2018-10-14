@@ -1,6 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-
+import styled from 'styled-components';
 
 
 const FilterBox = styled.div({
@@ -8,11 +7,8 @@ const FilterBox = styled.div({
   background: 'white',
   border: '1px solid black',
   height: '50px',
-  width: '50px'
+  width: '50px',
+  zindex: 5,
 });
 
-render(
-  <div>
-    <FilterBox />
-  </div>
-);
+export default FilterBox;
