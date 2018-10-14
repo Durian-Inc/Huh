@@ -313,9 +313,12 @@ class MapContainer extends Component {
             },
             map: map
           });
+          var infowindow = new google.maps.InfoWindow({
+            content: loc.name + "\n" + loc.address + "\n" + loc.type
+          });
+
           marker.addListener("click", function() {
-            console.log("Hiya");
-            this.props.pane();
+            infowindow.open(marker.get("map"), marker);
           });
         });
       });
@@ -323,7 +326,17 @@ class MapContainer extends Component {
   }
 
   render() {
-    return <div ref="map" style={{ height: "100%", width: "100%" }} />;
+    return (
+      <div
+        ref="map"
+        style={{
+          height: "100%",
+          width: "100%",
+          position: "relative",
+          zIndex: 0
+        }}
+      />
+    );
   }
 }
 

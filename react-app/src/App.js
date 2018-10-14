@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import "./App.css";
-import SlidingPane from "react-sliding-pane";
 import {
   MapContainer,
   CheckboxContainer,
-  SearchbarContainer
+  SearchbarContainer,
+  FilterBox
 } from "./components";
 
 const AppWrap = styled.div`
@@ -14,36 +14,14 @@ const AppWrap = styled.div`
 `;
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      isPaneOpen: false
-    };
-    this.openPane = this.openPane.bind(this);
-  }
-
-  openPane() {
-    this.setState({
-      isPaneOpen: true
-    });
-  }
-
   render() {
     return (
       <AppWrap>
-        <CheckboxContainer />
+        <FilterBox>
+          <CheckboxContainer />
+        </FilterBox>
         <SearchbarContainer />
-        <SlidingPane
-          isOpen={this.state.isPaneOpen}
-          width="300px"
-          onRequestClose={() => {
-            // triggered on "<" on left top click or on outside click
-            this.setState({ isPaneOpen: false });
-          }}
-        >
-          <div>And I am pane content. BTW, what rocks?</div>
-        </SlidingPane>
-        <MapContainer pane={this.openPane} />
+        <MapContainer />
       </AppWrap>
     );
   }

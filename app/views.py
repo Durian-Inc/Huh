@@ -1,6 +1,10 @@
+from json import dumps
+
+from flask import jsonify
+
 from app import app
 from app.utils import place_search, retrieve_details
-from json import dumps
+
 
 @app.route('/')
 def index():
@@ -25,4 +29,4 @@ def map_data():
             'phone': details['formatted_phone_number'],
             'type': details['types'][0],
         })
-    return dumps(locations)
+    return jsonify(locations)

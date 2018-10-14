@@ -1,18 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
-
+import styled from 'styled-components';
 
 const FilterBox = styled.div({
+	top: '30px',
+  right: '30px',
   position: 'absolute',
   background: 'white',
-  border: '1px solid black',
-  height: '50px',
-  width: '50px'
+  boxRadius: '10px',
+  boxShadow: '1px 1px 1px 1px #ccc',
+  height: '300px',
+  width: '200px',
+  zIndex: 5,
 });
 
-render(
-  <div>
-    <FilterBox />
-  </div>
-);
+export default FilterBox;
