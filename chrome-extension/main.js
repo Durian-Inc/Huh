@@ -119,7 +119,15 @@ function formatListOfData(jsonResponse) {
     var mapBoi = mapBois[0];
     mapBoi.innerHTML = "<div><iframe src=\"http://localhost:3000\"></iframe></div>";
     for (var location in jsonResponse) {
-      mapBoi.innerHTML += "<div style=\"border-top: 1px solid #EEE;font-size: 16px;color: #222;line-height: 20px\">" + jsonResponse[location].name + "</div><br />";
+      var loc = jsonResponse[location];
+      var langs = "";
+      for (var i in loc.languages) {
+        langs += loc.languages[i];
+      }
+      mapBoi.innerHTML += "<div style=\"border-top: 1px solid #EEE;font-size: 16px;color: #222;line-height: 20px;padding:0em 0.5em 0em 0.5em\">" + loc.name + "</div>";
+      mapBoi.innerHTML += "<div style=\"font-size: 13px;color:#999;line-height:16px;padding:0em 0.5em 0em 0.5em\">" + langs + "</div>";
+      mapBoi.innerHTML += "<div style=\"font-size: 13px;color:#999;line-height:16px;padding:0em 0.5em 0em 0.5em\">" + loc.address + "</div>";
+      mapBoi.innerHTML += "<div style=\"font-size: 13px;color:#999;line-height:16px;padding:0em 0.5em 0em 0.5em\">" + loc.phone + "</div>";
     }
   }
 };
