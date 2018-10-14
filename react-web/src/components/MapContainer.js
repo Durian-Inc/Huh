@@ -313,12 +313,16 @@ class MapContainer extends Component {
             },
             map: map
           });
-          var infowindow = new google.maps.InfoWindow({
-            content: loc.name + "\n" + loc.address + "\n" + loc.type
-          });
 
           marker.addListener("click", function() {
-            infowindow.open(marker.get("map"), marker);
+            window.updateInfo(
+              loc.name,
+              loc.type,
+              1.1,
+              1.2,
+              loc.address,
+              loc.desc
+            );
           });
         });
       });
