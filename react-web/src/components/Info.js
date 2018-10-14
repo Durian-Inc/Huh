@@ -1,18 +1,26 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 
-const InfoWrapper = styled.div({
-  bottom: "30px",
-  left: "30px",
-  position: "absolute",
-  background: "white",
-  borderRadius: "20px",
-  boxShadow: "0 4px 20px rgba(255, 7, 245, 0.5)",
-  height: "300px",
-  width: "250px",
-  padding: "15px",
-  zIndex: 5
-});
+const InfoWrapper = styled.div`
+  bottom: 30px;
+  left: 30px;
+  position: absolute;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(255, 7, 245, 0.5);
+  height: 300px;
+  width: 250px;
+  padding: 15px;
+  z-index: 5;
+
+  @media (max-width: 630px) {
+    display: none;
+  }
+
+  @media (max-height: 500px) {
+    display: none;
+  }
+`;
 
 class Info extends Component {
   render() {

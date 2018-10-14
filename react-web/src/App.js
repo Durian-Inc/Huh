@@ -4,7 +4,6 @@ import "./App.css";
 import {
   MapContainer,
   CheckboxContainer,
-  SearchbarContainer,
   FilterBox,
   Info,
   Search
