@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Autocomplete from 'react-autocomplete'
-//import GoogleMapsLoader from "google-maps";
+import GoogleMapsLoader from "google-maps";
 //import styled from "styled-components";
 
 
@@ -17,6 +17,22 @@ function requestPlaceApi(query) {
   });
 }
 
+function geolocate(google, autocomplete) {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var geolocation = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+      var circle = new google.maps.Circle({
+        center: geolocation,
+        radius: position.coords.accuracy
+      });
+      autocomplete.setBounds(circle.getBounds());
+    });
+  }
+}
+
 class SearchbarContainer extends Component {
 
   state = {
@@ -25,12 +41,46 @@ class SearchbarContainer extends Component {
   }
 
   currentPromise = null;
+
+
+
+
+  componentDidMount() {
+    let options = {
+      center: { lat: -34.397, lng: 150.644 },
+      zoom: 15
+    };
+
+    GoogleMapsLoader.VERSION = "weekly";
+    GoogleMapsLoader.KEY = "AIzaSyCAgU40OXQVFZ5azzF13WtS20OM8pGFCH4";
+    GoogleMapsLoader.LIBRARIES = ['geometry', 'places'];
+    GoogleMapsLoader.load(function(google) {
+      var autocomplete = new google.maps.places.Autocomplete(document.getElementById('search-autocomplete', options)
+      geolocate(google, autocomplete);
+      console.log(61, autocomplete);
+
+      //
+
+    });
+  }
+
+
+
+
+
+
+
+
+
+
+
+
   render() {
 
     console.log(33, this);
     console.log(34, this.currentPromise);
     return (
-      <form>
+      <form ref="searchForm">
         <label htmlFor="search-autocomplete">Search</label>
         <Autocomplete
           inputProps={{ id: 'search-autocomplete' }}
