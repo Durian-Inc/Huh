@@ -1,12 +1,13 @@
-from flask import jsonify, request
+import uuid
+from hashlib import sha256
 
 import geocoder
+from flask import jsonify, request
+
 from app import app
-from app.utils import (add_entry_to_table, find_nearby_places, marker_query,
-                       retrieve_details, parse_marker, aggregate_the_markers,
-                       find_lang, event_query)
-from hashlib import sha256
-import uuid
+from app.utils import (add_entry_to_table, aggregate_the_markers, event_query,
+                       find_lang, find_nearby_places, marker_query,
+                       parse_marker, retrieve_details)
 
 
 @app.route('/')
@@ -30,7 +31,7 @@ def extension_query():
     results = find_nearby_places(lat, lon, query=text_query)
     locations = []
     markers = []
-    for result in results[0:3]:
+    for result in results[:7]:
         markers.append(parse_marker(result))
     return jsonify(markers)
 
@@ -46,20 +47,20 @@ def map_data():
         lat = geocode.lat
     if lon is None:
         lon = geocode.lng
-    
+
     all_markers = []
     results = find_nearby_places(lat, lon, query=text_query)
-    for result in results[0:3]:
+    for result in results:
         result_id = result['place_id']
         marker = marker_query(result_id)
-        if marker is not None:
+        if marker:
             all_markers.append(aggregate_the_markers(result_id))
         else:
             add_entry_to_table(parse_marker(result), table_name="Markers")
-    return jsonify(all_markers+event_query(lat, lon))
+    return jsonify(all_markers)
 
 
-@app.route('/api/create/event', methods=['GET'])
+@app.route('/api/create/event', methods=['POST'])
 def create_new_event():
     lat = request.args.get('lat')
     lon = request.args.get('lon')
@@ -69,7 +70,7 @@ def create_new_event():
     event_name = request.args.get('event_name')
     event_type = request.args.get('event_type')
 
-    if locations != []:   
+    if locations != []:
         new_event = {
             'e_id': sha256(str(event_name).encode('utf-8')).hexdigest(),
             'e_name': event_name,
@@ -92,7 +93,8 @@ def create_new_event():
     add_entry_to_table(new_event, "Events")
     return jsonify(new_event)
 
-@app.route('/api/create/literacy', methods=['GET'])
+
+@app.route('/api/create/literacy', methods=['POST'])
 def most_literate():
     lat = request.args.get('lat')
     lon = request.args.get('lon')
@@ -103,11 +105,11 @@ def most_literate():
     if lon is None:
         lon = g.lng
     results = find_nearby_places(lat, lon)
-    final = find_lang(results,lang)
+    final = find_lang(results, lang)
     return jsonify(final)
 
 
-@app.route('/api/create/rating', methods=['GET'])
+@app.route('/api/create/rating', methods=['POST'])
 def create_new_rating():
     lat = request.args.get('lat')
     lon = request.args.get('lon')
@@ -122,13 +124,13 @@ def create_new_rating():
             'descrip': request.args.get('descrip')
         }
     else:
-       rating = {
+        rating = {
             'r_id': str(uid),
             'm_id': "none",
             'p_rating': request.args.get('plevel'),
             'c_rating': request.args.get('clevel'),
             'descrip': request.args.get('descrip')
-        } 
+        }
 
     add_entry_to_table(rating, table_name="Ratings")
     return jsonify(rating)

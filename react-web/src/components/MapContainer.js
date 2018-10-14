@@ -303,29 +303,32 @@ class MapContainer extends Component {
         }
       ]*/
 
-      axios.get("http://localhost:5000/api/query").then(response => {
-        let locations = response.data;
-        locations.forEach(loc => {
-          var marker = new google.maps.Marker({
-            position: {
-              lat: loc.lat,
-              lng: loc.lng
-            },
-            map: map
-          });
+      axios
+        .get("http://localhost:5000/api/query?lat=38.6326478&lon=-90.2278518")
+        .then(response => {
+          let locations = response.data;
+          locations.forEach(loc => {
+            var marker = new google.maps.Marker({
+              position: {
+                lat: loc.lat,
+                lng: loc.lng
+              },
+              map: map
+            });
 
-          marker.addListener("click", function() {
-            window.updateInfo(
-              loc.name,
-              loc.type,
-              null,
-              null,
-              loc.address,
-              loc.desc
-            );
+            marker.addListener("click", function() {
+              console.log(loc);
+              window.updateInfo(
+                loc.m_name,
+                "Commercial",
+                null,
+                null,
+                loc.m_address,
+                loc.m_desc
+              );
+            });
           });
         });
-      });
     });
   }
 

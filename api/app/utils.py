@@ -4,7 +4,7 @@ import re
 
 
 API_KEY = "AIzaSyCAgU40OXQVFZ5azzF13WtS20OM8pGFCH4"
-DATABASE = "api/app/database/database.db"
+DATABASE = "../api/app/database/database.db"
 
 
 def query_places(location=None):
@@ -56,14 +56,14 @@ def parse_marker(result):
     })
 
 def marker_query(place_id=None):
-    marker = None
-    command = "SELECT * FROM Markers WHERE m_id = '{}'".format(place_id)
+    markers = []
+    command = "SELECT * FROM Markers"
     with sql.connect(DATABASE) as connection:
         cur = connection.cursor()
         cur.execute(command)
-        marker = cur.fetchall()
+        markers = cur.fetchall()
         cur.close()
-    return marker
+    return markers
 
 
 def event_query(lat, lon):
@@ -92,7 +92,7 @@ def add_entry_to_table(new_entry, table_name):
 
 def aggregate_the_markers(result_id):
     select_command = ('''
-        SELECT e_id, e_name, Markers.m_id, e_type, lang, Ratings.r_id, l_rating, m_address, m_phone, m_name, lat, lng, p_rating, c_rating
+        SELECT e_id, e_name, Markers.m_id, e_type, lang, Ratings.r_id, l_rating, m_address, m_phone, m_name, Markers.lat, Markers.lng, p_rating, c_rating
         FROM Events, Literacy, Markers, Ratings
         WHERE Markers.m_id = '{}' AND Markers.m_id = Ratings.m_id AND Ratings.r_id = Literacy.r_id AND Markers.m_id = Events.m_id
         ''').format(result_id)
