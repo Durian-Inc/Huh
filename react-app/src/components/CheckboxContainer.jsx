@@ -51,7 +51,7 @@ class Controls extends React.Component {
         }, this);
     
         return (
-        	<div>
+        	<div> Filter Results
               <div>
                   {outputCheckboxes}
               </div>

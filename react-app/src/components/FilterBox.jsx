@@ -7,8 +7,8 @@ const FilterBox = styled.div({
   background: 'white',
   boxRadius: '10px',
   boxShadow: '1px 1px 1px 1px #ccc',
-  height: '300px',
-  width: '200px',
+  height: '100px',
+  width: '150px',
   zIndex: 5,
 });
 
