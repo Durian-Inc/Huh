@@ -10,8 +10,7 @@ DATABASE = "api/app/database/database.db"
 def query_places(location=None):
     request_url = ("""
         https://maps.googleapis.com/maps/api/place/details/json
-        ?placeid=ChIJN1t_tDeuEmsRUsoyG83frY4&
-        fields=name,rating,formatted_phone_number,formatted_address&
+        ?fields=name,rating,formatted_phone_number,formatted_address&
         key="""+API_KEY)
     r = requests.get(request_url)
     return r.text
@@ -68,8 +67,10 @@ def marker_query(place_id=None):
 
 
 def add_entry_to_table(new_entry, table_name):
-    name = re.compile("/.'name'")
-    new_entry[name] = new_entry[name].replace("'", "\\")
+    try:
+        new_entry['name'] = new_entry['name'].replace("'", "\\")
+    except KeyError:
+        new_entry['e_name'] = new_entry['e_name'].replace("'", "\\")        
     columns = ', '.join(new_entry.keys())
     place_holders = ', '.join('?'*len(new_entry))
     insert_command = "INSERT INTO {} ({}) Values ({})".format(table_name, columns, place_holders)
@@ -80,9 +81,11 @@ def add_entry_to_table(new_entry, table_name):
         cur.close()
 
 def aggregate_the_markers(result_id):
-    select_command = ('''SELECT e_id, e_name, Markers.m_id, e_type, lang, Ratings.r_id, l_rating, m_address, m_phone, m_name, lat, lng, p_rating, c_rating"
-        FROM 'Events','Literacy','Markers','Ratings'
-        WHERE Markers.m_id = {} AND Markers.m_id = Ratings.m_id AND Ratings.r_id = Literacy.r_id AND Markers.m_id = Events.m_id;''').format(result_id)
+    select_command = ('''
+        SELECT e_id, e_name, Markers.m_id, e_type, lang, Ratings.r_id, l_rating, m_address, m_phone, m_name, lat, lng, p_rating, c_rating
+        FROM Events, Literacy, Markers, Ratings
+        WHERE Markers.m_id = '{}' AND Markers.m_id = Ratings.m_id AND Ratings.r_id = Literacy.r_id AND Markers.m_id = Events.m_id
+        ''').format(result_id)
     with sql.connect(DATABASE) as connection:
         cur = connection.cursor()
         cur.execute(select_command)
@@ -95,8 +98,8 @@ def find_lang(results,lang):
     for result in results:
         select_command =( '''
         SELECT count(lang )
-        FROM Literacy, Ratings, Makers
-        WHERE lang = {} AND Makers.m_id = {} AND Literacy.r_id = Ratings.r_id AND Ratings.m_id = Makers.m_id
+        FROM Literacy, Ratings, Markers
+        WHERE lang = {} AND Markers.m_id = '{}' AND Literacy.r_id = Ratings.r_id AND Ratings.m_id = Makers.m_id
         ''').format(lang,result['place_id'])
         with sql.connect(DATABASE) as connection:
             cur = connection.cursor()

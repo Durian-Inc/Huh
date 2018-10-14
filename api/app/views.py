@@ -58,7 +58,7 @@ def map_data():
     return jsonify(all_markers)
 
 
-@app.route('/api/create/event', methods=['POST'])
+@app.route('/api/create/event', methods=['GET'])
 def create_new_event():
     lat = request.args.get('lat')
     lon = request.args.get('lon')
@@ -68,7 +68,7 @@ def create_new_event():
     event_type = request.args.get('event_type')
 
     new_event = {
-        'e_id': sha256(event_name.encode('utf-8')).hexdigest(),
+        'e_id': sha256(str(event_name).encode('utf-8')).hexdigest(),
         'e_name': event_name,
         'e_descrip': event_descrip,
         'e_type': event_type 
