@@ -6,7 +6,7 @@ class MapContainer extends Component {
   componentDidMount() {
     let el = this.refs.map;
     let options = {
-      center: { lat: -34.397, lng: 150.644 },
+      center: { lat: 38.627, lng: -90.1994 },
       zoom: 15,
       disableDefaultUI: true,
       zoomControl: true,
@@ -278,7 +278,7 @@ class MapContainer extends Component {
               lng: position.coords.longitude
             };
 
-            map.setCenter(pos);
+            map.panTo(pos);
           },
           function() {
             handleLocationError(true, infoWindow, map.getCenter());
@@ -313,12 +313,16 @@ class MapContainer extends Component {
             },
             map: map
           });
-          var infowindow = new google.maps.InfoWindow({
-            content: loc.name + "\n" + loc.address + "\n" + loc.type
-          });
 
           marker.addListener("click", function() {
-            infowindow.open(marker.get("map"), marker);
+            window.updateInfo(
+              loc.name,
+              loc.type,
+              null,
+              null,
+              loc.address,
+              loc.desc
+            );
           });
         });
       });

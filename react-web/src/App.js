@@ -4,8 +4,9 @@ import "./App.css";
 import {
   MapContainer,
   CheckboxContainer,
-  SearchbarContainer,
-  FilterBox
+  FilterBox,
+  Info,
+  Search
 } from "./components";
 
 const AppWrap = styled.div`
@@ -20,7 +21,8 @@ class App extends Component {
         <FilterBox>
           <CheckboxContainer />
         </FilterBox>
-        <SearchbarContainer />
+        <Search />
+        <Info />
         <MapContainer />
       </AppWrap>
     );

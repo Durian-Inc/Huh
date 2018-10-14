@@ -1,41 +1,77 @@
 import React from "react";
-import checkboxes from "./checkboxes";
-import Checkbox from "./Checkbox";
+import "./CheckboxContainer.css";
 
-class CheckboxContainer extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      checkedItems: new Map()
-    };
-
-    this.handleChange.bind(this);
-  }
-  handleChange = e => {
-    const item = e.target.name;
-    const isChecked = e.target.checked;
-    this.setState(prevState => ({
-      checkedItems: prevState.checkedItems.set(item, isChecked)
-    }));
-  };
-
+class CheckBox extends React.Component {
   render() {
     return (
-      <React.Fragment>
-        {checkboxes.map(item => (
-          <label key={item.key}>
-            {item.name}
-            <Checkbox
-              name={item.name}
-              checked={this.state.checkedItems.get(item.name)}
-              onChange={this.handleChange}
-            />
-          </label>
-        ))}
-      </React.Fragment>
+      <label className="container">
+        <input
+          type="checkbox"
+          id={this.props.id}
+          value={this.props.value}
+          onChange={this.props.onChange}
+        />
+        <span className="checkmark" />
+      </label>
     );
   }
 }
 
-export default CheckboxContainer;
+class Controls extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { optionsChecked: [] };
+  }
+
+  changeEvent(event) {
+    let checkedArray = this.state.optionsChecked;
+    let selectedValue = event.target.value;
+
+    if (event.target.checked === true) {
+      checkedArray.push(selectedValue);
+      this.setState({
+        optionsChecked: checkedArray
+      });
+    } else {
+      let valueIndex = checkedArray.indexOf(selectedValue);
+      checkedArray.splice(valueIndex, 1);
+
+      this.setState({
+        optionsChecked: checkedArray
+      });
+    }
+  }
+
+  render() {
+    let checkBoxArray = ["Events", "Businesses", "Hiring"];
+
+    let outputCheckboxes = checkBoxArray.map(function(string, i) {
+      return (
+        <div style={{ padding: "8px 0" }}>
+          <span>
+            <label htmlFor={"string_" + i}>{string}</label>
+          </span>
+          <CheckBox
+            value={string}
+            id={"string_" + i}
+            onChange={this.changeEvent.bind(this)}
+          />
+        </div>
+      );
+    }, this);
+
+    return (
+      <div>
+        {" "}
+        <h4
+          style={{ textAlign: "center", textTransform: "uppercase", margin: 0 }}
+        >
+          Filter
+        </h4>
+        <div>{outputCheckboxes}</div>
+      </div>
+    );
+  }
+}
+
+export default Controls;

@@ -3,14 +3,13 @@
   <head>
     <meta charset="utf-8">
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="theme-color" content="#000000">
-    <!--
+    <meta name="viewport" content=
+    "width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000"><!--
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
     -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
-    <!--
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json"><!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
       Only files inside the `public` folder can be referenced from the HTML.
@@ -19,14 +18,203 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
+    <title>
+      React App
+    </title>
+    <style>
+    /* The Modal (background) */
+    .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 6; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    }
+
+    /* The Close Button */
+    .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+    } 
+    </style>
   </head>
   <body>
-    <noscript>
-      You need to enable JavaScript to run this app.
-    </noscript>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <!--
+    <div id="myModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">Close</span>
+        <form action="http://localhost:5000/api/create/rating" method="post">
+          <h1>
+            If making a review
+          </h1>
+          <div>
+            <label for="lat">Latitude of Business:</label> <input type="number"
+            step="any" id="lat" name="lat">
+          </div>
+          <div>
+            <label for="lon">Longitude of Business:</label> <input type=
+            "number" step="any" id="lon" name="lon">
+          </div>
+          <div>
+            <label for="plevel">How well did they respect your privacy?</label>
+            <select name="plevel">
+              <option value="0">
+                0 Stars
+              </option>
+              <option value="1">
+                1 Stars
+              </option>
+              <option value="2">
+                2 Stars
+              </option>
+              <option value="3">
+                3 Stars
+              </option>
+              <option value="4">
+                4 Stars
+              </option>
+              <option value="5">
+                5 Stars
+              </option>
+            </select>
+          </div>
+          <div>
+            <label for="clevel">How well did they respect your
+            language?</label> <select name="clevel">
+              <option value="0">
+                0 Stars
+              </option>
+              <option value="1">
+                1 Stars
+              </option>
+              <option value="2">
+                2 Stars
+              </option>
+              <option value="3">
+                3 Stars
+              </option>
+              <option value="4">
+                4 Stars
+              </option>
+              <option value="5">
+                5 Stars
+              </option>
+            </select>
+          </div>
+          <div>
+            <label for="event_descrip">Location description:</label> 
+            <textarea id="event_descrip" name="event_descrip"></textarea>
+          </div>
+          <div class="button">
+            <button type="submit">Send your event</button>
+          </div>
+        </form>
+        <form action="http://localhost:5000/api/create/event" method="post">
+          <h1>
+            If creating an event
+          </h1>
+          <div>
+            <label for="lat">Latitude of Event:</label> <input type="number"
+            step="any" id="lat" name="lat">
+          </div>
+          <div>
+            <label for="lon">Longitude of Event:</label> <input type="number"
+            step="any" id="lon" name="lon">
+          </div>
+          <div>
+            <label for="event_name">Event name:</label> <input type="text" id=
+            "event_name" name="event_name">
+          </div>
+          <div>
+            <label for="type">Is this a social or hiring event?</label>
+            <select name="type">
+              <option value="e">
+                Social
+              </option>
+              <option value="j">
+                Hiring
+              </option>
+            </select>
+          </div>
+          <div>
+            <label for="event_descrip">Event description:</label> 
+            <textarea id="event_descrip" name="event_descrip"></textarea>
+          </div>
+          <div class="button">
+            <button type="submit">Send your event</button>
+          </div>
+        </form>
+      </div>
+      <script type="text/javascript">
+      // Get the modal
+      var modal = document.getElementById('myModal');
+
+      // Get the <span> element that closes the modal
+      var span = document.getElementsByClassName("close")[0];
+
+      // When the user clicks on <span> (x), close the modal
+      span.onclick = function() {
+      modal.style.display = "none";
+      }
+
+      function openModal(){
+      modal.style.display = "block";
+      }
+
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+      } 
+      function updateInfo(name, type, prating, lrating, address, desc){
+      let d_name = document.getElementById("name");
+      let d_type = document.getElementById("type");
+      let d_prating = document.getElementById("prating");
+      let d_lrating = document.getElementById("lrating");
+      let d_address = document.getElementById("location");
+      let d_desc = document.getElementById("desc");
+
+      d_name.innerHTML = name
+      d_type.innerHTML = type
+      if(prating)
+        d_prating.innerHTML = prating + "/5.0"
+      else
+        d_prating.innerHTML = "?"
+      if(lrating)
+        d_lrating.innerHTML = lrating + "/5.0"
+      else
+        d_lrating.innerHTML = "?"
+      d_address.innerHTML = address
+      if(desc)
+        d_desc.innerHTML = desc
+      }
+      </script> <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
 
@@ -36,5 +224,6 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    </div>
   </body>
 </html>
