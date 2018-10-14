@@ -14,7 +14,11 @@ body {
     display: none;
   }
 }
-
+@media (max-height: 400px) {
+  .sc-htpNat {
+    display: none !important;
+  }
+}
 
 /*.pac-container {
   width: 50% !important;
