@@ -2,7 +2,31 @@
 // DURIAN INC.
 ////////////////////////////////////////////////////////////////////////////////
 
-var ROOT_URL_FOR_GET_DATA = 'http://duri.an/api/getByProfile'
+var ROOT_URL_FOR_GET_DATA = 'http://localhost:5000/api/query'
+
+var loadingData = [
+  {
+    "name": "Loading...",
+    "addresss": "",
+    "phone": "",
+    "type": "",
+    "languages": [""]
+  },
+  {
+    "name": "Loading...",
+    "addresss": "",
+    "phone": "",
+    "type": "",
+    "languages": [""]
+  },
+  {
+    "name": "Loading...",
+    "addresss": "",
+    "phone": "",
+    "type": "",
+    "languages": [""]
+  }
+]
 
 function logError(error) {
   console.log('There was an error: \n', error);
@@ -13,7 +37,7 @@ function logError(error) {
 ////////////////////////////////////////////////////////////////////////////////
 
 function getUserCurrentLocation() {
-  var options = {maximumAge: 5 * 60 * 1000};
+  var options = {maximumAge: 50 * 60 * 1000};
   return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(resolve, reject, options);
   })
@@ -46,7 +70,8 @@ function getProfileForUser() {
     .then((coordinates) => {
       return {
         lat: coordinates.latitude,
-        lon: coordinates.longitude
+        lon: coordinates.longitude,
+        query: "" //TODO
       };
     });
 }
@@ -88,7 +113,12 @@ function validateJSONResponse(response) {
 ////////////////////////////////////////////////////////////////////////////////
 
 function formatListOfData(jsonResponse) {
-  return false;
+  mapBois = document.getElementsByClassName("xERobd");
+  if(mapBois.length > 0) {
+    var mapBoi = mapBois[0];
+    mapBoi.innerHTML = "";
+    
+  }
 };
 
 
@@ -97,7 +127,7 @@ function formatListOfData(jsonResponse) {
 ////////////////////////////////////////////////////////////////////////////////
 
 function onDocumentLoaded() {
-
+  formatListOfData(loadingData);
   /* determine if geolocation is supported; 
      only continue if so */
   var zipCodeProvided = false;
