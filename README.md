@@ -1,6 +1,6 @@
 # Huh ‽
-> Created for GlobalHack 7 in 2018 by Durian Inc.
-Team: Clay McGinnis, Connor J Toth, Derek Hanger, Griffin Melson, Innocent Niyibizi, Jennifer Coleman
+> Created for GlobalHack 7 in 2018 by Durian Inc.    
+Team: Clay McGinnis, Connor J Toth, Derek Hanger, Griffin Melson, Innocent Niyibizi, Jennifer Coleman    
 Recipient of $2,500 prize
 
 # Installation
