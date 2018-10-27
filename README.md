@@ -16,21 +16,21 @@ git clone https://github.com/Durian-Inc/Huh
 
 ### Additional installation instructions
 #### API
-* `cd api`
-* `python3 run.py`
+1. `cd api`
+2. `python3 run.py`
 
 #### Front End
-* `cd react-web`
-* `yarn`
-* `yarn dev`
+1. `cd react-web`
+2. `yarn`
+3. `yarn dev`
 
 #### Chrome Extension
-* Open Chrome
-* Go to "Extensions"
-* Turn on "Developer mode"
-* Click "Load unpacked"
-* Navigate to `chrome-extension`
-* Confirm
+1. Open Chrome
+2. Go to "Extensions"
+3. Turn on "Developer mode"
+4. Click "Load unpacked"
+5. Navigate to `chrome-extension`
+6. Confirm
 
 ## Troubleshooting
 Browse and create issues: https://github.com/Durian-Inc/Huh/issues
